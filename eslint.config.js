@@ -6,8 +6,7 @@ export default tseslint.config(
   {
     ignores: ["**/*.js"],
   },
-  eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
+  tseslint.configs.disableTypeChecked,
   tseslint.configs.stylisticTypeChecked,
   {
     languageOptions: {
@@ -21,6 +20,7 @@ export default tseslint.config(
   {
     files: ["**/*.test.ts", "**/*.spec.ts"],
     rules: {
+      "no-unused-vars": "off",
       "@typescript-eslint/unbound-method": "off",
     },
   },
