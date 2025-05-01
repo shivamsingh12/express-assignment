@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import TaskModel from "../model/TaskModel.js";
 import UserModel from "../model/UserModel.js";
 import { CreateTaskType, UpdateTaskType } from "../types/taskType.js";
+import { UserType } from "../types/userType.js";
 
 export const getTaskById = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -23,6 +24,15 @@ export const getTaskById = async (req: Request, res: Response) => {
 
 export const getAllTasks = async (req: Request, res: Response) => {
   const { dueDateGT, dueDateLT, status } = req.query;
+  let { assignedTo } = req.query;
+  assignedTo = assignedTo?.toString()?.toLowerCase();
+  const user: typeof UserModel = (await UserModel.findOne({
+    email: assignedTo,
+  }))!;
+  if (!user && assignedTo) {
+    res.status(404).json({ message: "user not found" }).send();
+    return;
+  }
   const query = TaskModel.find();
   if (status) {
     query.where({ status });
@@ -37,7 +47,13 @@ export const getAllTasks = async (req: Request, res: Response) => {
       query.where({ dueDate: { $lte: dueDateLT } });
     }
   }
-  const tasks = await query.populate("assignedTo").exec();
+  let tasks = await query.populate("assignedTo").exec();
+  if (assignedTo) {
+    tasks = tasks.filter((item) => {
+      const assignedUser: UserType = item?.assignedTo as unknown as UserType;
+      return assignedUser?.email == assignedTo;
+    });
+  }
   res.status(200).json({ count: tasks.length, tasks }).send();
   return;
 };

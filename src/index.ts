@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
 
+import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleWare from "./middleware/errorMiddleware.js";
 import TaskRoutes from "./route/TaskRoute.js";
 import UserRoutes from "./route/UserRoute.js";
@@ -14,7 +15,7 @@ await mongoose.connect(URI);
 console.log("connected to mongo ");
 
 app.use(bodyParser.json());
-app.use("/tasks", TaskRoutes);
+app.use("/tasks", authMiddleware, TaskRoutes);
 app.use("/", UserRoutes);
 app.use(errorMiddleWare);
 

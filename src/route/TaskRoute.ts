@@ -23,22 +23,10 @@ router.get("/:id", getTaskById);
 
 router.get("/", validateSchema(QueryTaskSchema), getAllTasks);
 
-router.post(
-  "/",
-  authMiddleware,
-  checkRole,
-  validateSchema(CreateTaskSchema),
-  createTask,
-);
+router.post("/", checkRole, validateSchema(CreateTaskSchema), createTask);
 
-router.put(
-  "/:id",
-  authMiddleware,
-  checkRole,
-  validateSchema(UpdateTaskSchema),
-  updateTask,
-);
+router.put("/:id", checkRole, validateSchema(UpdateTaskSchema), updateTask);
 
-router.delete("/:id", authMiddleware, checkRole, deleteTask);
+router.delete("/:id", checkRole, deleteTask);
 
 export default router;

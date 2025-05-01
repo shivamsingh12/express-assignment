@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { assignRole } from "../controller/UserController.js";
+
 export const CreateTaskSchema = z.object({
   body: z.object({
     assignedTo: z.string().email().optional(),
@@ -27,6 +29,7 @@ export const UpdateTaskSchema = z.object({
 
 export const QueryTaskSchema = z.object({
   query: z.object({
+    assignedTo: z.string().email().optional(),
     dueDateGT: z.string().date().optional(),
     dueDateLT: z.string().date().optional(),
     status: z.enum(["UNASSIGNED", "PENDING", "COMPLETED"]).optional(),
