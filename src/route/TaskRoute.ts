@@ -9,6 +9,7 @@ import {
   updateTask,
 } from "../controller/TaskController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import cacheMiddleware from "../middleware/cacheMIddleware.js";
 import checkRole from "../middleware/checkRole.js";
 import validateSchema from "../middleware/validationMiddleware.js";
 import {
@@ -21,7 +22,7 @@ const router = Router();
 
 router.get("/:id", getTaskById);
 
-router.get("/", validateSchema(QueryTaskSchema), getAllTasks);
+router.get("/", validateSchema(QueryTaskSchema), cacheMiddleware, getAllTasks);
 
 router.post("/", checkRole, validateSchema(CreateTaskSchema), createTask);
 

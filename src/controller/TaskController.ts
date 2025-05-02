@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 
+import { KEY } from "../middleware/cacheMIddleware.js";
 import TaskModel from "../model/TaskModel.js";
 import UserModel from "../model/UserModel.js";
 import { CreateTaskType, UpdateTaskType } from "../types/taskType.js";
 import { UserType } from "../types/userType.js";
+import redisClient from "../utils/getRedisClient.js";
 
 export const getTaskById = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -55,6 +57,12 @@ export const getAllTasks = async (req: Request, res: Response) => {
     });
   }
   res.status(200).json({ count: tasks.length, tasks }).send();
+  redisClient?.set(KEY, JSON.stringify(tasks), {
+    expiration: {
+      type: "EX",
+      value: 60,
+    },
+  });
   return;
 };
 
@@ -110,6 +118,7 @@ export const createTask = async (req: Request, res: Response) => {
   }
   const task = await TaskModel.create(body);
   res.status(201).json({ data: task, message: "succes" }).send();
+  redisClient?.del(KEY);
   return;
 };
 
@@ -186,6 +195,7 @@ export const updateTask = async (req: Request, res: Response) => {
     task = await task.save();
   }
   res.status(202).json({ data: task, message: "success" }).send();
+  redisClient?.del(KEY);
   return;
 };
 
@@ -203,6 +213,7 @@ export const deleteTask = async (req: Request, res: Response) => {
   } else {
     await TaskModel.deleteOne({ _id: id });
     res.status(200).json({ message: "success" }).send();
+    redisClient?.del(KEY);
     return;
   }
 };

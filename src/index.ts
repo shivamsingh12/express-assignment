@@ -12,6 +12,7 @@ const URI: string = process.env.MONGO_URI ?? "";
 const app = express();
 
 await mongoose.connect(URI);
+
 console.log("connected to mongo ");
 
 app.use(bodyParser.json());
