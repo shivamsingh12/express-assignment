@@ -79,3 +79,5 @@ function tasksFilter(
   }
   return tasks;
 }
+
+console.log("redis middleware registered");

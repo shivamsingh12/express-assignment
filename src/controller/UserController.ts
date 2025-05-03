@@ -9,6 +9,8 @@ import {
   SignUpBodyType,
   UserType,
 } from "../types/userType.js";
+import redisClient from "../utils/getRedisClient.js";
+import validateJWT from "../utils/validateJWT.js";
 
 export const signUp = async (req: Request, res: Response) => {
   const body: SignUpBodyType = req.body;
@@ -31,7 +33,6 @@ export const logIn = async (req: Request, res: Response) => {
   );
   const isMatch = bcrypt.compareSync(body.password, user?.password ?? "");
   const SECRET: string = process.env.JWT_SECRET_KEY ?? "";
-  console.log("secret " + SECRET);
   if (!user || !isMatch) {
     res.status(401).json({ message: "incorrect credentials" }).send();
   } else {
@@ -63,6 +64,22 @@ export const assignRole = async (req: Request, res: Response) => {
     })
     .send();
 };
-export const logOut = (req: Request, res: Response) => {
-  console.log(req, res);
+export const logOut = async (req: Request, res: Response) => {
+  const token: string = (req.headers.authorization ??
+    req.headers.Authorization) as string;
+  const { exp, id } = validateJWT(token) as unknown as {
+    exp: number;
+    id: string;
+  };
+  const tokenTTL = new Date(exp * 1000).getTime() - new Date().getTime();
+  const TTL_IN_SECONDS = Math.ceil(tokenTTL / 1000);
+  console.log(TTL_IN_SECONDS / 3600);
+  await redisClient?.set(token, "LOGGED_OUT", {
+    expiration: {
+      type: "EX",
+      value: TTL_IN_SECONDS,
+    },
+  });
+  res.status(204).send();
+  return;
 };

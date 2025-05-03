@@ -25,7 +25,6 @@ const validate =
         params: req.params,
         query: req.query,
       });
-      console.log("validation success");
       next();
     } catch (error) {
       const errorResponse: ErrorResponseSchemaType = {
@@ -44,3 +43,5 @@ const validate =
   };
 
 export default validate;
+
+console.log("validation middleware registered");

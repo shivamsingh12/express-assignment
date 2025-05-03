@@ -17,3 +17,5 @@ const checkRole = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default checkRole;
+
+console.log("role middleware registered");

@@ -57,12 +57,14 @@ export const getAllTasks = async (req: Request, res: Response) => {
     });
   }
   res.status(200).json({ count: tasks.length, tasks }).send();
-  redisClient?.set(KEY, JSON.stringify(tasks), {
-    expiration: {
-      type: "EX",
-      value: 60,
-    },
-  });
+  if (!dueDateGT && !dueDateLT && !status && !assignedTo) {
+    redisClient?.set(KEY, JSON.stringify(tasks), {
+      expiration: {
+        type: "EX",
+        value: 60,
+      },
+    });
+  }
   return;
 };
 

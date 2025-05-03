@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { Router } from "express";
+import morgan from "morgan";
 
 import {
   assignRole,
@@ -18,6 +18,8 @@ import {
 
 const router = Router();
 
+router.use(morgan("combined"));
+
 router.post("/login", validateSchema(LogInSchema), logIn);
 
 router.post("/signup", validateSchema(SignUpSchema), signUp);
@@ -33,3 +35,5 @@ router.put(
 router.delete("/logout", authMiddleware, logOut);
 
 export default router;
+
+console.log("user routes registered");

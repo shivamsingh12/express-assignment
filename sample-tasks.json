@@ -1,0 +1,62 @@
+[
+  {
+    "_id": {
+      "$oid": "6816440d43ba2ec85da2f804"
+    },
+    "description": "lorem ipsum dolor sit amet",
+    "dueDate": {
+      "$date": "2026-06-06T00:00:00.000Z"
+    },
+    "status": "UNASSIGNED",
+    "title": "task 1",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6816441643ba2ec85da2f807"
+    },
+    "description": "lorem ipsum dolor sit amet",
+    "dueDate": {
+      "$date": "2026-06-06T00:00:00.000Z"
+    },
+    "status": "UNASSIGNED",
+    "title": "task 2",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6816441a43ba2ec85da2f80a"
+    },
+    "description": "lorem ipsum dolor sit amet",
+    "dueDate": {
+      "$date": "2026-06-06T00:00:00.000Z"
+    },
+    "status": "UNASSIGNED",
+    "title": "task 3",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6816442043ba2ec85da2f80d"
+    },
+    "description": "lorem ipsum dolor sit amet",
+    "dueDate": {
+      "$date": "2026-06-06T00:00:00.000Z"
+    },
+    "status": "UNASSIGNED",
+    "title": "task 4",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6816442943ba2ec85da2f810"
+    },
+    "description": "lorem ipsum dolor sit amet",
+    "dueDate": {
+      "$date": "2026-06-06T00:00:00.000Z"
+    },
+    "status": "UNASSIGNED",
+    "title": "task 5",
+    "__v": 0
+  }
+]

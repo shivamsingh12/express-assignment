@@ -13,3 +13,5 @@ const errorMiddleWare = (
 };
 
 export default errorMiddleWare;
+
+console.log("error middleware registered");
