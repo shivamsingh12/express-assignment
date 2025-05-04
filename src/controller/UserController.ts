@@ -14,11 +14,11 @@ import validateJWT from "../utils/validateJWT.js";
 
 export const signUp = async (req: Request, res: Response) => {
   const body: SignUpBodyType = req.body;
+  body.email = body.email.toLowerCase();
   try {
     await UserModel.create(body);
     res.status(201).json({ message: "sign up success" }).send();
   } catch (error) {
-    console.log(error);
     res
       .status(400)
       .json({ message: "user already exits with this email" })
@@ -28,9 +28,9 @@ export const signUp = async (req: Request, res: Response) => {
 
 export const logIn = async (req: Request, res: Response) => {
   const body: LogInBodyType = req.body;
-  const user = await UserModel.findOne({ email: body.email }).select(
-    "+password",
-  );
+  const user = await UserModel.findOne({
+    email: body.email.toLowerCase(),
+  }).select("+password");
   const isMatch = bcrypt.compareSync(body.password, user?.password ?? "");
   const SECRET: string = process.env.JWT_SECRET_KEY ?? "";
   if (!user || !isMatch) {

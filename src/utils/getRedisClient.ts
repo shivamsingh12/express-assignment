@@ -1,7 +1,7 @@
 import { createClient } from "redis";
 
-const HOST = process.env.REDIS_HOST ?? process.env.REDIS_HOST_LOCAL;
-const PORT = process.env.REDIS_PORT ?? process.env.REDIS_PORT_LOCAL;
+const HOST = process.env.REDIS_HOST;
+const PORT = process.env.REDIS_PORT;
 
 const client = createClient({
   socket: {

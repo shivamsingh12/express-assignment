@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["chai", "mocha", "node"]
   },
   "include": ["src/**/*.ts", "app.test.ts"],
   "exclude": ["dist"]
