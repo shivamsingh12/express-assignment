@@ -1,4 +1,5 @@
 import { Router } from "express";
+import asyncHandler from "express-async-handler";
 import morgan from "morgan";
 
 import {
@@ -21,15 +22,30 @@ const router = Router();
 
 router.use(morgan("combined"));
 
-router.get("/:id", getTaskById);
+router.get("/:id", asyncHandler(getTaskById));
 
-router.get("/", validateSchema(QueryTaskSchema), cacheMiddleware, getAllTasks);
+router.get(
+  "/",
+  validateSchema(QueryTaskSchema),
+  asyncHandler(cacheMiddleware),
+  asyncHandler(getAllTasks),
+);
 
-router.post("/", checkRole, validateSchema(CreateTaskSchema), createTask);
+router.post(
+  "/",
+  checkRole,
+  validateSchema(CreateTaskSchema),
+  asyncHandler(createTask),
+);
 
-router.put("/:id", checkRole, validateSchema(UpdateTaskSchema), updateTask);
+router.put(
+  "/:id",
+  asyncHandler(checkRole),
+  validateSchema(UpdateTaskSchema),
+  asyncHandler(updateTask),
+);
 
-router.delete("/:id", checkRole, deleteTask);
+router.delete("/:id", asyncHandler(checkRole), asyncHandler(deleteTask));
 
 export default router;
 

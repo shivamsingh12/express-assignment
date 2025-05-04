@@ -214,8 +214,8 @@ export const deleteTask = async (req: Request, res: Response) => {
     return;
   } else {
     await TaskModel.deleteOne({ _id: id });
-    res.status(200).json({ message: "success" }).send();
     redisClient?.del(KEY);
+    res.status(200).json({ message: "success" }).send();
     return;
   }
 };

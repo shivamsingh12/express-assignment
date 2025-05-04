@@ -94,6 +94,9 @@ describe("Login fetch /tasks and Logout", () => {
         title: "task 1",
       });
     taskID = res.body.data._id;
+    console.log(
+      taskID + " ====================================================",
+    );
     expect(res.status).to.equal(201);
     expect(Object.keys(res.body)).to.include("message");
   });
@@ -102,5 +105,13 @@ describe("Login fetch /tasks and Logout", () => {
       .delete(`/tasks/${taskID}`)
       .set("Authorization", `${authToken}`);
     expect(res.status).to.equal(403);
+  });
+  it("should assign a task to a user /tasks", async function () {
+    const res = await request(app)
+      .put(`/tasks/${taskID}`)
+      .set("Authorization", `${authToken}`)
+      .send({ assignedTo: "shivamlesser@gmail.com" });
+    console.log(res.error);
+    expect(res.status).to.equal(202);
   });
 });

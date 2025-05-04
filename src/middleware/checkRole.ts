@@ -12,6 +12,7 @@ const checkRole = (req: Request, res: Response, next: NextFunction) => {
     user?.role != "ADMIN"
   ) {
     res.status(403).json({ message: "insufficient privileges" }).send();
+    return;
   }
   next();
 };

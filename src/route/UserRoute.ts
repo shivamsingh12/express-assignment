@@ -1,4 +1,5 @@
 import { Router } from "express";
+import asyncHandler from "express-async-handler";
 import morgan from "morgan";
 
 import {
@@ -20,19 +21,19 @@ const router = Router();
 
 router.use(morgan("combined"));
 
-router.post("/login", validateSchema(LogInSchema), logIn);
+router.post("/login", validateSchema(LogInSchema), asyncHandler(logIn));
 
-router.post("/signup", validateSchema(SignUpSchema), signUp);
+router.post("/signup", validateSchema(SignUpSchema), asyncHandler(signUp));
 
 router.put(
   "/assign-role",
   authMiddleware,
-  checkRole,
+  asyncHandler(checkRole),
   validateSchema(UpdateUserRoleSchema),
-  assignRole,
+  asyncHandler(assignRole),
 );
 
-router.delete("/logout", authMiddleware, logOut);
+router.delete("/logout", authMiddleware, asyncHandler(logOut));
 
 export default router;
 
