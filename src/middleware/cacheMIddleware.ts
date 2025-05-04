@@ -25,12 +25,11 @@ const cacheMiddleware = async (
         assignedTo!,
         JSON.parse(tasks),
       );
-      res
-        .status(200)
-        .json({ count: tasks.length, message: "cache hit", tasks })
-        .send();
+      res.status(200).json({ count: tasks.length, tasks }).send();
+      console.log("/tasks cache hit");
       return;
     } else {
+      console.log("/tasks cache miss");
       next();
     }
   } catch (error) {
