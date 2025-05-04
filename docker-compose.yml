@@ -6,12 +6,8 @@ services:
       - "3000:3000"
     depends_on:
       - redis
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - PORT=3000
-      - MONGO_URI=mongodb+srv://root:root@cluster0.z7yqbbj.mongodb.net/tasksDB?retryWrites=true&w=majority&appName=Cluster0
-      - JWT_SECRET_KEY=44t5yrgfder4t5yrhgfbvfr45yhtrgfbvfr42554yrhgfbvfry54u6ghbfnbgvcudtfx23c5ef2v34tc3v4e6b7u3v543c6vb2vcc4eryshgnhtyt4r
+    env_file:
+      - .env.docker
   redis:
     image: "redis:latest"
     ports:

@@ -1,7 +1,10 @@
 import { expect } from "chai";
+import { config } from "dotenv";
 import request from "supertest";
 
 import app from "./src/index.js";
+
+config({ path: "/.env.local" });
 
 let authToken: string;
 let taskID: string;
