@@ -36,3 +36,5 @@ When we hit the PUT /tasks/:id or DELETE /tasks/id or POST /tasks, after the res
 ## Fetching Logic:
 
 When we hit the GET /tasks (with or without query params), our redis middleware first checks the redis cache for "/tasks" value, if null next() is called else tasks are returned from the cached values (with filters applied from query params if applicable)
+
+![Architecture Diagram](https://github.com/shivamsingh12/express-assignment/blob/main/image.jpg)
